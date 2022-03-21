@@ -1,0 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka&family=Nunito&family=Raleway:wght@200;300;400&family=Source+Code+Pro:wght@300&display=swap');
+.container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: 20px;
+    column-gap: 20px;
+}
