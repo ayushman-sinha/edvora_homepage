@@ -2,8 +2,13 @@ import {useState} from 'react'
 import axios from 'axios'
 import './css/styles.css'
 import RideCard from './components/RideCard'
+import Header from './components/Header'
 const App = () => {
   const [data,setData]=useState();
+  let [nearest,setNearest]=useState();
+  let [past,setPast]=useState();
+  let [upcoming,setUpcoming]=useState();
+ 
   const user={
     station_code:40,
     name:"Dhruv Singh",
@@ -46,12 +51,116 @@ const App = () => {
       dist.push(tmp);
       
     }
-  dist.sort((a,b)=>parseInt(a[0])-parseInt(b[0]));
-    console.log(dist);
+    dist.sort((a,b)=>parseInt(a[0])-parseInt(b[0]));
+  //   let date1=Date.parse(dist[0][1].date);
+  //   let dateNow=new Date();
+  //   dateNow=Date.parse(dateNow);
+  //  console.log(date1,dateNow);
+    nearestCard(dist);
+    upcomingCard(dist);
+    PastCard(dist);
+    let date1=new Date(dist[0][1].date);
+   
+  }
+  function getTheDate(dateF){
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
+    let date1=new Date(dateF);
+    let day=date1.getDay();
+    let month=monthNames[date1.getMonth()];
+    let year=date1.getFullYear();
+    let hours=date1.getHours();
+    let minutes=date1.getMinutes();
+    if(hours<10)
+    hours='0'+hours;
+    if(minutes<10)
+    minutes='0'+minutes;
+    if(day===0)
+    day++;
+    if(day===1||day===21||day===31)
+    day+='st';
+    else if(day===2)
+    day+='nd'
+    else if(day===3)
+    day+='rd'
+    else
+    day+='th';
+    return day+' '+month+' '+year+' '+hours+':'+minutes;
+  }
+  function nearestCard(dist){
+    let nearArray=[];
+    for(let i=0;i<dist.length;i++){     
+      let nearObj={
+        id:dist[i][1].id,
+        origin_staton:dist[i][1].origin_station_code,
+        station_path:JSON.stringify(dist[i][1].station_path),
+        date:getTheDate(dist[i][1].date),
+        distance:dist[i][0],
+        imgLink:dist[i][1].map_url,
+        city:dist[i][1].city,
+        state: (dist[i][1].state)
+      }
+    
+      nearArray.push(<RideCard key={i} nearVal={nearObj}></RideCard>)
+    }
+    setNearest(nearArray);
+    
+  }
+  function upcomingCard(dist){
+    let dateNow=new Date();
+    dateNow=Date.parse(dateNow);
+
+    let upcomingArray=[];
+    for(let i=0;i<dist.length;i++){  
+      let date1=Date.parse(dist[i][1].date);   
+      if(date1>=dateNow){
+      let nearObj={
+        id:dist[i][1].id,
+        origin_staton:dist[i][1].origin_station_code,
+        station_path:JSON.stringify(dist[i][1].station_path),
+        date:getTheDate(dist[i][1].date),
+        distance:dist[i][0],
+        imgLink:dist[i][1].map_url,
+        city:dist[i][1].city,
+        state: (dist[i][1].state)
+      }   
+         
+      upcomingArray.push(<RideCard key={i} nearVal={nearObj}></RideCard>)
+    }
+    }
+     setUpcoming(upcomingArray);
+  }
+  function PastCard(dist){
+    let dateNow=new Date();
+    dateNow=Date.parse(dateNow);
+
+    let pastArray=[];
+    for(let i=0;i<dist.length;i++){  
+      let date1=Date.parse(dist[i][1].date);   
+      if(date1<dateNow){
+      let nearObj={
+        id:dist[i][1].id,
+        origin_staton:dist[i][1].origin_station_code,
+        station_path:JSON.stringify(dist[i][1].station_path),
+        date:getTheDate(dist[i][1].date),
+        distance:dist[i][0],
+        imgLink:dist[i][1].map_url,
+        city:dist[i][1].city,
+        state: (dist[i][1].state)
+      }   
+         
+      pastArray.push(<RideCard key={i} nearVal={nearObj}></RideCard>)
+    }
+    }
+     setPast(pastArray);
   }
   return (
     <div className='container'>
-      <RideCard></RideCard>
+      <Header></Header>
+      <div className='nearestC'>
+     {past}
+     </div>
       <button type='button' onClick={(e)=>handleChange()}>Click</button>
     </div>
   )

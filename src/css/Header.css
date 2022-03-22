@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka&family=Inter:wght@400;500&family=Nunito&family=Raleway:wght@200;300;400&family=Source+Code+Pro:wght@300&display=swap');
+
+.headerContainer{   
+    width: 100vw;
+    height: 85px;
+    background-color: #101010;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+ 
+}
+.MainText{
+    font-family: 'Nunito', sans-serif;
+    letter-spacing: 2px;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 40px;
+    position: relative;
+    left:40px;
+    color: #FFFFFF;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.leftContainer1{
+    position: relative;
+}
+.personName{
+    display: flex;
+    flex-direction: row;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px;
+    color: #FFFFFF;
+    position: relative;
+    left:70vw;
+    align-items: center;
+}
+.demoPic{
+    position: relative;
+    width: 44px;
+    height: 44px;    
+    border-radius: 22px;
+    transform: rotate(-0.36deg);
+    left:25px;
+}
+.profileImg{
+    width: 44px;
+    height: 44px;
+    border-radius: 22px;
+    object-fit:cover;
+}
+@media only screen and (max-width: 1000px){
+    .personName{
+        left:50vw;
+    }
+}
