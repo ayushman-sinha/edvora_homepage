@@ -17,7 +17,10 @@ const App = () => {
   const [city,setCity]=useState();
   const [stateN,setStateN]=useState();
  const [errorDetect,setErrorDetect]=useState(false);
-let disD=[];
+ const [dup1,setDup1]=useState();
+ const [dup2,setDup2]=useState();
+ const [dup3,setDup3]=useState();
+
 
 const filterOn=(e)=>{
   setFilterToggle(!filterToggle);
@@ -128,6 +131,7 @@ const filterOn=(e)=>{
       
     }
     setNearest(nearArray);
+    setDup1(nearArray);
     setNavRender(nearArray);
   }
   function upcomingCard(dist){
@@ -152,6 +156,7 @@ const filterOn=(e)=>{
     }
     }
      setUpcoming(upcomingArray);
+     setDup2(upcomingArray)
   }
   function PastCard(dist){
     let dateNow=new Date();
@@ -175,19 +180,32 @@ const filterOn=(e)=>{
     }
     }
      setPast(pastArray);
+     setDup3(pastArray)
   }
   const filterResults=(k,e)=>{   
-    
-    let tmp1=[]; 
-    console.log(nearest.length)
-    for(let i=0;i<nearest.length;i++)
-    {
-      //console.log(nearest[i].props.nearVal.city)
-      if(e.target.value===nearest[i].props.nearVal.city)
-      tmp1.push(nearest[i])
+    setNearest(dup1);
+    setUpcoming(dup2);
+    setPast(dup3);
+    let tmp1=[],tmp2=[],tmp3=[];
+    for(let i=0;i<dup1.length;i++)
+    {      
+      if(e.target.value===dup1[i].props.nearVal.city||e.target.value===dup1[i].props.nearVal.state)
+      tmp1.push(dup1[i])
     }
-    console.log(tmp1.length,e.target.value); 
+    for(let i=0;i<dup2.length;i++)
+    {      
+      if(e.target.value===dup2[i].props.nearVal.city||e.target.value===dup2[i].props.nearVal.state)
+      tmp2.push(dup2[i])
+    }
+    for(let i=0;i<dup3.length;i++)
+    {      
+      if(e.target.value===dup3[i].props.nearVal.city||e.target.value===dup3[i].props.nearVal.state)
+      tmp3.push(dup3[i])
+    }
+    
      setNearest(tmp1);
+     setUpcoming(tmp2);
+     setPast(tmp3);
   
   }
   return (
