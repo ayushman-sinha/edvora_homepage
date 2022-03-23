@@ -5,18 +5,32 @@ import './css/styles.css'
 import RideCard from './components/RideCard'
 import Header from './components/Header'
 const App = () => {
-  const [data,setData]=useState();
+  const [data,setData]=useState({first:'',second:''});
  const [nearest,setNearest]=useState();
   const [past,setPast]=useState();
  const [upcoming,setUpcoming]=useState();
  const  [navRender,setNavRender]=useState();
-  
+  const [nameProfile,setNameProfile]=useState();
+  const [imgProfile,setImgProfile]=useState();
+  const [search,setSearch]=useState(true);
+  const a=<div>
+  <input type='text' placeholder='Name..' onChange={(e)=>handleData(e,1)}></input>
+  <input type='number' placeholder='Station Code..'  onChange={(e)=>handleData(e,2)}></input>
+  <button type='button' onClick={(e)=>handleChange()}>Click</button>
+</div>
+
   const user={
     station_code:40,
     name:"Dhruv Singh",
     profile_key:"url",
   }
-  let myStation=40;
+
+  const handleData=(e,k)=>{
+    if(k===1)
+  setData({...data,first:e.target.value});
+  else
+  setData({...data,second:e.target.value});
+  }
   const handleNav=(selectVal)=>{
   console.log(selectVal);
   if(selectVal==1)
@@ -24,31 +38,20 @@ const App = () => {
   else if(selectVal==2)
   setNavRender(upcoming);
   else if(selectVal==3)
-  setNavRender(past)
-  else
-  setNavRender(<></>)
+  setNavRender(past);
+ 
+ 
   }
   const handleChange=async()=>{
    let response=await axios.get('https://assessment.api.vweb.app/rides');
    let ar=response.data;
+   console.log(data);
+   let myStation=data.second;
+   setNameProfile(data.first);
+   setImgProfile('https://picsum.photos/300');
+   setSearch(false);
   
-  //  ar.sort((a,b)=>{
-  //    let miniA,miniB,dif=99999;
-  //    for(let i=0;i<a.station_path.length;i++){
-  //      if(Math.abs(a.station_path[i]-myStation)<dif){
-  //        dif=Math.abs(a.station_path[i]-myStation);
-  //        miniA=(a.station_path[i]);
-  //      }
-  //    }
-  //     dif=99999;
-  //    for(let i=0;i<b.station_path.length;i++){
-  //     if(Math.abs(b.station_path[i]-myStation)<dif){
-  //       dif=Math.abs(b.station_path[i]-myStation);
-  //       miniB=b.station_path[i];
-  //     }
-  //   }
-  //     return miniA-miniB;
-  //   });
+
     let dist=[];
     for(let i=0;i<ar.length;i++){
       let dif=99999,mini;
@@ -64,15 +67,11 @@ const App = () => {
       dist.push(tmp);
       
     }
-    dist.sort((a,b)=>parseInt(a[0])-parseInt(b[0]));
-  //   let date1=Date.parse(dist[0][1].date);
-  //   let dateNow=new Date();
-  //   dateNow=Date.parse(dateNow);
-  //  console.log(date1,dateNow);
+    dist.sort((a,b)=>parseInt(a[0])-parseInt(b[0])); 
     nearestCard(dist);
     upcomingCard(dist);
     PastCard(dist);
-   
+
    
   }
   function getTheDate(dateF){
@@ -93,7 +92,7 @@ const App = () => {
   
     if(day===1||day===21||day===31)
     day+='st';
-    else if(day===2)
+    else if(day===2||day===22)
     day+='nd'
     else if(day===3)
     day+='rd'
@@ -118,7 +117,7 @@ const App = () => {
       nearArray.push(<RideCard key={i} nearVal={nearObj}></RideCard>)
     }
     setNearest(nearArray);
-    
+    setNavRender(nearArray);
   }
   function upcomingCard(dist){
     let dateNow=new Date();    
@@ -169,26 +168,19 @@ const App = () => {
   }
   return (
     <div className='container'>
-      <Header></Header>
+      <Header name={nameProfile} imgLink={imgProfile}></Header>
       <div className='upperNav'>
         <button type='button'  onClick={(e)=>handleNav(1)}>Nearest Rides</button>
-        <button type='button'  onClick={(e)=>handleNav(2)}>Upcoming Rides</button>
-        <button type='button' onClick={(e)=>handleNav(3)}>Past Rides</button>
+        <button type='button'  onClick={(e)=>handleNav(2)}>Upcoming Rides ({!upcoming?0:upcoming.length})</button>
+        <button type='button' onClick={(e)=>handleNav(3)}>Past Rides ({!past? 0:past.length})</button>
       </div>
       <div className='nearestC'>
-     {navRender}
+        {search?a:navRender}
+     
      </div>
-      <button type='button' onClick={(e)=>handleChange()}>Click</button>
+      
     </div>
   )
 }
 
-export default App
-/*
-<div className='header'>
-        <div className='leftDash'>Edvora</div>
-        <div className='rightDashName'>Dhruv Jain</div>
-        <div className='rigtDashPic'></div>
-        </div>
-        
- */
+export default App;

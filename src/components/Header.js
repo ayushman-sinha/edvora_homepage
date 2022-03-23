@@ -1,14 +1,14 @@
 import React from 'react'
 import '../css/Header.css'
 
-const Header = () => {
+const Header = (props) => {
   return (
     <div className='headerContainer'>
         <div className='MainText'>Edvora</div>
         
-        <div className='personName'>Dhruv Jain 
+        <div className='personName'>{props.name} 
         <div className='demoPic'>
-            <img src='https://picsum.photos/300' className='profileImg' />
+         {props.imgLink?<img src={props.imgLink} className='profileImg' />:<></>}
         </div>
         </div>
         
