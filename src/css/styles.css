@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Fredoka&family=Nunito&family=Raleway:wght@200;300;400&family=Source+Code+Pro:wght@300&display=swap');
 body{
-    background: #232323
+    background: #232323;
+    overflow-x: hidden;
 }
 .container{
     display: flex;
@@ -18,12 +19,162 @@ body{
     gap:20px
 }
 .upperNav{
-    width: 100vw;
+    width: 80vw;
     align-items: center;
     display: flex;
     justify-content: center;
     height: 85px;
     background-color: #232323;
     margin-bottom: 10px;
-
 }
+.navLeft{
+    display: flex;
+    position: relative;
+    gap:30px;
+    right:300px;
+}
+.filterButton{
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    color: #232323;
+  left: 300px;
+}
+.filterMenu{
+    width: 200px;
+    height: 150px;
+    top:30px;
+    right:25px;
+    background-color: #131313;
+    border-radius: 15px;
+    position: absolute;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    font-family: 'Inter', sans-serif;
+   color: rgb(146, 151, 151);
+    font-weight: 100;
+    letter-spacing: 2px;
+    z-index: 9;
+}
+.selectMenu{
+    background-color: transparent;
+    font-family: 'Inter', sans-serif;
+    color: rgb(255, 255, 255);
+    border: 0px solid;
+    width:140px;
+    height:30px;
+    border-radius: 4px;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    
+}
+.selectContainer{
+    display: flex;
+    flex-direction: column;
+    gap:10px;
+    margin-top:-10px;
+}
+.selectMenu option{
+    background-color: #020202;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    
+}
+.selectMenu option:checked{
+    background-color: #5f5b5b;
+    
+}
+.optionEdit{
+    background-color: #232323;
+    color: rgb(255, 255, 255);
+    font-family: 'Inter', sans-serif;
+    width:140px; 
+       
+}
+.customButton{
+    background-color: transparent;
+    border: 0px solid;
+    font-family: 'Inter', sans-serif;
+    color: rgb(150, 148, 148);
+    font-size: 20px;
+}
+.customButton:hover{
+    cursor: pointer;
+ 
+}
+.customButton:focus{
+  font-weight: 500;
+  color:white;
+border-bottom: 2px solid #f1f1f1;
+}
+.customFilter{
+    display: flex;
+    gap:4px;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    background-color: transparent;
+    border: 0px solid;
+    font-family: 'Inter', sans-serif;
+    color: rgb(255, 255, 255);
+    font-weight: 500;
+    font-size: 22px;
+}
+.customFilter:hover{
+    cursor: pointer;
+}
+.inputBox{
+    font-family: 'Inter', sans-serif;
+    flex-direction: column;
+    font-size:20px;
+    display: flex; 
+    color: #ee4545;
+    align-items: center;
+    align-content: center;
+}
+.inputContainer{
+    display: flex; 
+    gap:20px;
+}
+.inputEdit{
+    font-family: 'Inter', sans-serif;
+    padding-left: 12px;
+    background: transparent;
+    border: 1px solid;
+    color: aliceblue;
+    height: 30px;
+    border-radius: 5px;
+}
+.searchButton{
+    font-family: 'Inter', sans-serif;
+    color: #f1f1f1;
+    font-size: 18px;
+    background: transparent;
+    border: 0px solid;
+}
+.searchButton:hover{
+    cursor: pointer;
+    color: #979696;
+}
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #333232; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888; 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(182, 176, 176); 
+  }

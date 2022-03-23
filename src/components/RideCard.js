@@ -4,7 +4,7 @@ const RideCard = (props) => {
   return (
     <div className='cardContainer'>
         <div className='imgContainer'>
-            <img src={props.nearVal.imgLink} className='imgEdit' />
+            <img src={props.nearVal.imgLink} className='imgEdit' alt='Map_url'/>
         </div>
         <div className='textBoxRight'>
           <ul className='listEdit'>

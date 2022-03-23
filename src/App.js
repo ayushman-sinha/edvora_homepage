@@ -1,5 +1,5 @@
 import {useState} from 'react'
-
+import { Icon } from '@iconify/react';
 import axios from 'axios'
 import './css/styles.css'
 import RideCard from './components/RideCard'
@@ -13,18 +13,15 @@ const App = () => {
   const [nameProfile,setNameProfile]=useState();
   const [imgProfile,setImgProfile]=useState();
   const [search,setSearch]=useState(true);
-  const a=<div>
-  <input type='text' placeholder='Name..' onChange={(e)=>handleData(e,1)}></input>
-  <input type='number' placeholder='Station Code..'  onChange={(e)=>handleData(e,2)}></input>
-  <button type='button' onClick={(e)=>handleChange()}>Click</button>
-</div>
+  const [filterToggle,setFilterToggle]=useState(false);
+  const [city,setCity]=useState();
+  const [stateN,setStateN]=useState();
+ const [errorDetect,setErrorDetect]=useState(false);
 
-  const user={
-    station_code:40,
-    name:"Dhruv Singh",
-    profile_key:"url",
-  }
 
+const filterOn=(e)=>{
+  setFilterToggle(!filterToggle);
+}
   const handleData=(e,k)=>{
     if(k===1)
   setData({...data,first:e.target.value});
@@ -45,14 +42,19 @@ const App = () => {
   const handleChange=async()=>{
    let response=await axios.get('https://assessment.api.vweb.app/rides');
    let ar=response.data;
-   console.log(data);
+    
    let myStation=data.second;
    setNameProfile(data.first);
    setImgProfile('https://picsum.photos/300');
+   if(data.second&&data.first){
    setSearch(false);
-  
+   setErrorDetect(false)
+  }
+  else
+   setErrorDetect(true)
 
     let dist=[];
+    let cityList=[];let stateList=[];
     for(let i=0;i<ar.length;i++){
       let dif=99999,mini;
       for(let j=0;j<ar[i].station_path.length;j++){
@@ -65,13 +67,15 @@ const App = () => {
       tmp.push(Math.abs(mini-myStation));
       tmp.push(ar[i]);
       dist.push(tmp);
-      
+      cityList.push(<option value={ar[i].city} className='optionEdit'>{ar[i].city}</option>);
+      stateList.push(<option value={ar[i].state} className='optionEdit'>{ar[i].state}</option>);
     }
     dist.sort((a,b)=>parseInt(a[0])-parseInt(b[0])); 
     nearestCard(dist);
     upcomingCard(dist);
     PastCard(dist);
-
+    setCity(cityList);
+    setStateN(stateList);
    
   }
   function getTheDate(dateF){
@@ -170,12 +174,41 @@ const App = () => {
     <div className='container'>
       <Header name={nameProfile} imgLink={imgProfile}></Header>
       <div className='upperNav'>
-        <button type='button'  onClick={(e)=>handleNav(1)}>Nearest Rides</button>
-        <button type='button'  onClick={(e)=>handleNav(2)}>Upcoming Rides ({!upcoming?0:upcoming.length})</button>
-        <button type='button' onClick={(e)=>handleNav(3)}>Past Rides ({!past? 0:past.length})</button>
+        <div className='navLeft'>
+        <button type='button' className='customButton'  onClick={(e)=>handleNav(1)}>Nearest Rides</button>
+        <button type='button' className='customButton' onClick={(e)=>handleNav(2)}>Upcoming Rides ({!upcoming?0:upcoming.length})</button>
+        <button type='button' className='customButton' onClick={(e)=>handleNav(3)}>Past Rides ({!past? 0:past.length})</button>
+      </div>
+      <div className='filterButton'>
+        <button type='button' className='customFilter' onClick={(e)=>filterOn()}><Icon icon="bi:filter-left"  width="30" height="30" /> Filters</button>
+         {filterToggle? <div className='filterMenu'>
+           <h2>Filters</h2>
+           <div className='selectContainer'>
+           
+             <select className='selectMenu' >
+             <option value="0" className='optionEdit'>Select City:</option>
+             {city}
+             </select>
+          
+           
+           <select className='selectMenu'>
+             <option value="0" className='optionEdit'>Select State:</option>
+             {stateN}
+             </select>
+                    
+           </div>
+         </div>:<></>}
+      </div>
       </div>
       <div className='nearestC'>
-        {search?a:navRender}
+        {search?(<div className='inputBox'>
+          <div className='inputContainer'>
+  <input type='text' placeholder='Name..' className='inputEdit' onChange={(e)=>handleData(e,1)}></input>
+  <input type='number' placeholder='Station Code..'  className='inputEdit'  onChange={(e)=>handleData(e,2)}></input>
+  <button type='button' className='searchButton' onClick={(e)=>handleChange()}><Icon icon="bi:search" width="30" height="30" /></button>
+   </div>
+  {errorDetect?<p>Please enter the correct Name and Station Code.</p>:<></>}
+</div>):navRender}
      
      </div>
       
