@@ -1,20 +1,33 @@
 import {useState} from 'react'
+
 import axios from 'axios'
 import './css/styles.css'
 import RideCard from './components/RideCard'
 import Header from './components/Header'
 const App = () => {
   const [data,setData]=useState();
-  let [nearest,setNearest]=useState();
-  let [past,setPast]=useState();
-  let [upcoming,setUpcoming]=useState();
- 
+ const [nearest,setNearest]=useState();
+  const [past,setPast]=useState();
+ const [upcoming,setUpcoming]=useState();
+ const  [navRender,setNavRender]=useState();
+  
   const user={
     station_code:40,
     name:"Dhruv Singh",
     profile_key:"url",
   }
   let myStation=40;
+  const handleNav=(selectVal)=>{
+  console.log(selectVal);
+  if(selectVal==1)
+  setNavRender(nearest);
+  else if(selectVal==2)
+  setNavRender(upcoming);
+  else if(selectVal==3)
+  setNavRender(past)
+  else
+  setNavRender(<></>)
+  }
   const handleChange=async()=>{
    let response=await axios.get('https://assessment.api.vweb.app/rides');
    let ar=response.data;
@@ -59,15 +72,16 @@ const App = () => {
     nearestCard(dist);
     upcomingCard(dist);
     PastCard(dist);
-    let date1=new Date(dist[0][1].date);
+   
    
   }
   function getTheDate(dateF){
     const monthNames = ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
   ];
-    let date1=new Date(dateF);
-    let day=date1.getDay();
+    let date1=(dateF);
+    let day=date1.getDate();
+    //console.log(dateF);
     let month=monthNames[date1.getMonth()];
     let year=date1.getFullYear();
     let hours=date1.getHours();
@@ -76,8 +90,7 @@ const App = () => {
     hours='0'+hours;
     if(minutes<10)
     minutes='0'+minutes;
-    if(day===0)
-    day++;
+  
     if(day===1||day===21||day===31)
     day+='st';
     else if(day===2)
@@ -95,7 +108,7 @@ const App = () => {
         id:dist[i][1].id,
         origin_staton:dist[i][1].origin_station_code,
         station_path:JSON.stringify(dist[i][1].station_path),
-        date:getTheDate(dist[i][1].date),
+        date:getTheDate(new Date(dist[i][1].date)),
         distance:dist[i][0],
         imgLink:dist[i][1].map_url,
         city:dist[i][1].city,
@@ -108,24 +121,24 @@ const App = () => {
     
   }
   function upcomingCard(dist){
-    let dateNow=new Date();
-    dateNow=Date.parse(dateNow);
-
+    let dateNow=new Date();    
+    console.log(dateNow)
     let upcomingArray=[];
     for(let i=0;i<dist.length;i++){  
-      let date1=Date.parse(dist[i][1].date);   
+      let date1=new Date(dist[i][1].date);
+     
       if(date1>=dateNow){
+     // console.log(date1,date1.getDate());   
       let nearObj={
         id:dist[i][1].id,
         origin_staton:dist[i][1].origin_station_code,
         station_path:JSON.stringify(dist[i][1].station_path),
-        date:getTheDate(dist[i][1].date),
+        date:getTheDate(date1),
         distance:dist[i][0],
         imgLink:dist[i][1].map_url,
         city:dist[i][1].city,
         state: (dist[i][1].state)
-      }   
-         
+      }            
       upcomingArray.push(<RideCard key={i} nearVal={nearObj}></RideCard>)
     }
     }
@@ -133,17 +146,16 @@ const App = () => {
   }
   function PastCard(dist){
     let dateNow=new Date();
-    dateNow=Date.parse(dateNow);
 
     let pastArray=[];
     for(let i=0;i<dist.length;i++){  
-      let date1=Date.parse(dist[i][1].date);   
+      let date1=new Date(dist[i][1].date);
       if(date1<dateNow){
       let nearObj={
         id:dist[i][1].id,
         origin_staton:dist[i][1].origin_station_code,
         station_path:JSON.stringify(dist[i][1].station_path),
-        date:getTheDate(dist[i][1].date),
+        date:getTheDate(date1),
         distance:dist[i][0],
         imgLink:dist[i][1].map_url,
         city:dist[i][1].city,
@@ -158,8 +170,13 @@ const App = () => {
   return (
     <div className='container'>
       <Header></Header>
+      <div className='upperNav'>
+        <button type='button'  onClick={(e)=>handleNav(1)}>Nearest Rides</button>
+        <button type='button'  onClick={(e)=>handleNav(2)}>Upcoming Rides</button>
+        <button type='button' onClick={(e)=>handleNav(3)}>Past Rides</button>
+      </div>
       <div className='nearestC'>
-     {past}
+     {navRender}
      </div>
       <button type='button' onClick={(e)=>handleChange()}>Click</button>
     </div>

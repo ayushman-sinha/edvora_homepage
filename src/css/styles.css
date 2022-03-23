@@ -17,3 +17,13 @@ body{
     flex-direction: column;
     gap:20px
 }
+.upperNav{
+    width: 100vw;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    height: 85px;
+    background-color: #232323;
+    margin-bottom: 10px;
+
+}
