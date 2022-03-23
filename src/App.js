@@ -17,7 +17,7 @@ const App = () => {
   const [city,setCity]=useState();
   const [stateN,setStateN]=useState();
  const [errorDetect,setErrorDetect]=useState(false);
-
+let disD=[];
 
 const filterOn=(e)=>{
   setFilterToggle(!filterToggle);
@@ -29,7 +29,7 @@ const filterOn=(e)=>{
   setData({...data,second:e.target.value});
   }
   const handleNav=(selectVal)=>{
-  console.log(selectVal);
+  //console.log(selectVal);
   if(selectVal==1)
   setNavRender(nearest);
   else if(selectVal==2)
@@ -52,8 +52,8 @@ const filterOn=(e)=>{
   }
   else
    setErrorDetect(true)
-
-    let dist=[];
+   let dist=[];
+    
     let cityList=[];let stateList=[];
     for(let i=0;i<ar.length;i++){
       let dif=99999,mini;
@@ -71,6 +71,7 @@ const filterOn=(e)=>{
       stateList.push(<option value={ar[i].state} className='optionEdit'>{ar[i].state}</option>);
     }
     dist.sort((a,b)=>parseInt(a[0])-parseInt(b[0])); 
+    
     nearestCard(dist);
     upcomingCard(dist);
     PastCard(dist);
@@ -89,6 +90,7 @@ const filterOn=(e)=>{
     let year=date1.getFullYear();
     let hours=date1.getHours();
     let minutes=date1.getMinutes();
+
     if(hours<10)
     hours='0'+hours;
     if(minutes<10)
@@ -106,7 +108,10 @@ const filterOn=(e)=>{
   }
   function nearestCard(dist){
     let nearArray=[];
-    for(let i=0;i<dist.length;i++){     
+    console.log(dist[0][1].city)
+    
+    for(let i=0;i<dist.length;i++){  
+         
       let nearObj={
         id:dist[i][1].id,
         origin_staton:dist[i][1].origin_station_code,
@@ -117,15 +122,16 @@ const filterOn=(e)=>{
         city:dist[i][1].city,
         state: (dist[i][1].state)
       }
-    
+      
+     
       nearArray.push(<RideCard key={i} nearVal={nearObj}></RideCard>)
+      
     }
     setNearest(nearArray);
     setNavRender(nearArray);
   }
   function upcomingCard(dist){
-    let dateNow=new Date();    
-    console.log(dateNow)
+    let dateNow=new Date();      
     let upcomingArray=[];
     for(let i=0;i<dist.length;i++){  
       let date1=new Date(dist[i][1].date);
@@ -170,6 +176,20 @@ const filterOn=(e)=>{
     }
      setPast(pastArray);
   }
+  const filterResults=(k,e)=>{   
+    
+    let tmp1=[]; 
+    console.log(nearest.length)
+    for(let i=0;i<nearest.length;i++)
+    {
+      //console.log(nearest[i].props.nearVal.city)
+      if(e.target.value===nearest[i].props.nearVal.city)
+      tmp1.push(nearest[i])
+    }
+    console.log(tmp1.length,e.target.value); 
+     setNearest(tmp1);
+  
+  }
   return (
     <div className='container'>
       <Header name={nameProfile} imgLink={imgProfile}></Header>
@@ -185,13 +205,13 @@ const filterOn=(e)=>{
            <h2>Filters</h2>
            <div className='selectContainer'>
            
-             <select className='selectMenu' >
+             <select className='selectMenu' onChange={(e)=>filterResults(1,e)} >
              <option value="0" className='optionEdit'>Select City:</option>
              {city}
              </select>
           
            
-           <select className='selectMenu'>
+           <select className='selectMenu' onChange={(e)=>filterResults(2,e)}>
              <option value="0" className='optionEdit'>Select State:</option>
              {stateN}
              </select>

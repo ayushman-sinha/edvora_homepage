@@ -77,4 +77,22 @@ border-radius: 16px;
     .rightContainer{
     flex-direction: column;
     }
+    .listEdit{
+        font-size: 12px;
+    }
+    .rightContainer{
+     margin-left: -10px;
+    }
+}
+@media only screen and (max-width:750px){
+    
+    .listEdit{
+        font-size:10px;
+    }
+    .textBoxRight{
+      left:15px;
+    }
+    .rightContainer{
+        display: none;
+    }
 }
