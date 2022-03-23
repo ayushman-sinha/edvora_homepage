@@ -6,17 +6,18 @@ import RideCard from './components/RideCard'
 import Header from './components/Header'
 const App = () => {
   const [data,setData]=useState({first:'',second:''});
- const [nearest,setNearest]=useState();
-  const [past,setPast]=useState();
- const [upcoming,setUpcoming]=useState();
- const  [navRender,setNavRender]=useState();
-  const [nameProfile,setNameProfile]=useState();
-  const [imgProfile,setImgProfile]=useState();
+ const [nearest,setNearest]=useState();//Contains list of all the rides nearest to me
+  const [past,setPast]=useState();//Contains list of all the rides in the past
+ const [upcoming,setUpcoming]=useState();//Contains list of all the rides in the future
+ const  [navRender,setNavRender]=useState();//Used for conditionally rendering each component -> [nearest,past,upcoming]
+  const [nameProfile,setNameProfile]=useState();//Profile name as entered by the User.
+  const [imgProfile,setImgProfile]=useState(); //Profile pic of the user
   const [search,setSearch]=useState(true);
-  const [filterToggle,setFilterToggle]=useState(false);
-  const [city,setCity]=useState();
-  const [stateN,setStateN]=useState();
+  const [filterToggle,setFilterToggle]=useState(false);  //Used for toggling the Filter Menu
+  const [city,setCity]=useState();//Storing the list of cities
+  const [stateN,setStateN]=useState(); //Storing the list of States
  const [errorDetect,setErrorDetect]=useState(false);
+ //All these used to store the original version of  [nearest,upcoming and past ] rides respectively.
  const [dup1,setDup1]=useState();
  const [dup2,setDup2]=useState();
  const [dup3,setDup3]=useState();
@@ -52,11 +53,12 @@ const filterOn=(e)=>{
    if(data.second&&data.first){
    setSearch(false);
    setErrorDetect(false)
-  }
+  }//Checking wether both input Fields are Filled
   else
    setErrorDetect(true)
    let dist=[];
-    
+    /*Creating a 2-D Array to Store the minimum distances and the object[i]
+     Sort the 2D array on the basis of the minimum distance */
     let cityList=[];let stateList=[];
     for(let i=0;i<ar.length;i++){
       let dif=99999,mini;
