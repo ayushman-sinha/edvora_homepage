@@ -73,26 +73,96 @@ border-radius: 16px;
     color: #FFFFFF;
 }
 
-@media only screen and (max-width: 1100px){
-    .rightContainer{
-    flex-direction: column;
-    }
+@media only screen and (max-width: 1115px){
+   
+   
     .listEdit{
         font-size: 12px;
     }
     .rightContainer{
-     margin-left: -10px;
+     margin-left: -30px;
     }
 }
-@media only screen and (max-width:750px){
+@media only screen and (max-width:1030px){
     
     .listEdit{
-        font-size:10px;
+        font-size:12px;
     }
     .textBoxRight{
       left:15px;
     }
     .rightContainer{
+        flex-direction: column;
+      margin-left: 20px;;
+    }
+}
+@media only screen and (max-width:900px){
+    
+    .listEdit{
+        font-size:12px;
+    }
+    .textBoxRight{
+      left:8px;
+    }
+    .rightContainer{
+        flex-direction: column;
+      margin-left:-10px;;
+    }
+}
+@media only screen and (max-width:815px){
+    
+    .listEdit{
+        font-size:12px;
+    }
+    .textBoxRight{
+      left:8px;
+    }
+    .rightContainer{
+        flex-direction: column;
+      margin-left:-20px;;
+    }
+    .textSmall{
+        font-size: 10px;
+    }
+}
+@media only screen and (max-width:760px){
+    
+    .listEdit{
+        font-size:11px;
+    }
+    .textBoxRight{
+      left:8px;
+    }
+    .rightContainer{
+        flex-direction: column;
+      margin-left:-30px;;
+    }
+    .textSmall{
+        font-size: 8px;
+    }
+    .imgEdit{
+        width:200px;
+    }
+}
+@media only screen and (max-width:500px){
+    
+    .listEdit{
+        font-size:10px;
+        line-height:19px;
+    }
+    .textBoxRight{
+      left:8px;
+    }
+    .rightContainer{
+        flex-direction: column;
+      margin-left:-30px;;
+    }
+    .textSmall{
         display: none;
+        font-size: 8px;
+    }
+    .imgEdit{
+        width:120px;
+        height: auto;
     }
 }

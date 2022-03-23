@@ -19,8 +19,9 @@ body{
     gap:20px
 }
 .upperNav{
-    width: 80vw;
+    width: 1200px;
     align-items: center;
+    align-content: center;
     display: flex;
     justify-content: center;
     height: 85px;
@@ -32,6 +33,7 @@ body{
     position: relative;
     gap:30px;
     right:300px;
+    width: auto;
 }
 .filterButton{
     display: flex;
@@ -40,7 +42,7 @@ body{
     justify-content: center;
     align-content: center;
     color: #232323;
-  left: 300px;
+  left:300px;
 }
 .filterMenu{
     width: 200px;
@@ -96,6 +98,7 @@ body{
        
 }
 .customButton{
+    width: auto;
     background-color: transparent;
     border: 0px solid;
     font-family: 'Inter', sans-serif;
@@ -178,3 +181,72 @@ border-bottom: 2px solid #f1f1f1;
   ::-webkit-scrollbar-thumb:hover {
     background: rgb(182, 176, 176); 
   }
+  @media only screen and (max-width: 1150px){
+      .upperNav{
+          width:800px;
+      }
+      .navLeft{
+          gap:40px;
+          right:200px;
+      }
+      .customButton{
+          font-size: 15px;
+      }
+      .filterButton{
+          left:200px;
+      }
+  }
+  @media only screen and (max-width: 980px){
+    .upperNav{
+        width:500px;
+    }
+    .navLeft{
+        gap:40px;
+        right:100px;
+    }
+    .customButton{
+        width: 100px;
+        font-size: 13px;
+    }
+    .filterButton{
+        left:80px;
+    }
+}
+@media only screen and (max-width: 692px){
+    .upperNav{
+        width:300px;
+    }
+    .navLeft{
+        gap:20px;
+        right:50px;
+    }
+    .customButton{
+        width: 100px;
+        font-size: 13px;
+    }
+    .filterButton{
+        left:30px;
+    }
+}
+@media only screen and (max-width: 522px){
+    .upperNav{
+        width:150px;
+        
+    }
+    .navLeft{
+      gap:10px;
+        right:20px;
+        
+    }
+    .customButton{
+        width: 80px;
+        font-size: 11px;
+    }
+    .filterButton{
+        left:0px;
+        
+    }
+    .inputContainer{
+        flex-direction: column;
+    }
+}
